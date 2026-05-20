@@ -72,11 +72,17 @@
                     window.Clerk.mountSignIn(authContainer);
                 }
             } catch (err) {
+                const detalheErro = err && err.message ? err.message : "Script do Clerk bloqueado ou não carregado.";
                 document.getElementById('auth-container').innerHTML = 
-                    `<p class="text-red-500 font-bold bg-red-50 p-4 rounded-lg border border-red-200">
-                        Erro ao carregar. Você esqueceu de colocar sua chave do Clerk no código?
-                    </p>`;
-                console.error(err);
+                    `<div class="text-red-600 bg-red-50 p-5 rounded-lg border border-red-200 text-left text-sm">
+                        <p class="font-bold text-base mb-2">Erro ao iniciar a segurança 🛑</p>
+                        <p class="mb-2"><strong>Motivo:</strong> ${detalheErro}</p>
+                        <p class="text-slate-600 mt-3 pt-3 border-t border-red-200">
+                            <strong>Dica:</strong> Se o link no seu navegador começa com <code>file:///</code>, o login não vai funcionar. 
+                            Acesse através do link oficial gerado pela Vercel!
+                        </p>
+                    </div>`;
+                console.error("Erro completo:", err);
             }
         });
     </script>
